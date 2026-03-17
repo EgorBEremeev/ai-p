@@ -19,6 +19,7 @@
     --font-serif:   Georgia, 'Times New Roman', serif;
     --font-sans:    system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --content-max:  660px;
+    --pad-x:        clamp(20px, 5vw, 64px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -230,14 +231,15 @@ body.layout-technical {
    ══════════════════════════════════════════ */
 .layout-prose article {
     max-width: var(--content-max);
+    width: calc(100% - 2 * var(--pad-x));
     margin: 0 auto;
-    padding: 56px clamp(20px, 5vw, 64px) 64px;
+    padding: 32px 0 64px;
 }
 
 /* Heading */
 h1 {
     font-family: var(--font-serif);
-    font-size: 26px;
+    font-size: 28px;
     font-weight: normal;
     line-height: 1.3;
     color: var(--text);
@@ -271,12 +273,17 @@ section:first-of-type p:first-child {
 /* Opening paragraph */
 .opening {
     font-size: 1.06em;
+    margin-top: 0;
     margin-bottom: 0.5em;
 }
 
-/* Section divider */
+/* Section divider (markdown --- renders as <hr>) */
+hr,
 .section-break {
+    border: none;
     margin: 2.2em 0 0;
+    padding: 0;
+    height: 0;
 }
 
 /* Key term */
@@ -582,16 +589,18 @@ footer {
     font-size: 13px;
     color: var(--muted);
     text-align: center;
+    line-height: 1.6;
     margin-top: 4em;
     padding: 0 28px 32px;
 }
 
-/* Prose footer: constrained to content width */
+/* Prose footer: constrained to content width, same as article */
 .layout-prose footer {
     max-width: var(--content-max);
+    width: calc(100% - 2 * var(--pad-x));
     margin-left: auto;
     margin-right: auto;
-    padding: 0 clamp(20px, 5vw, 64px) 64px;
+    padding: 0 0 64px;
 }
 
 /* Technical footer: full width below sidebar+content */
@@ -647,8 +656,7 @@ footer {
 
     /* Prose layout */
     .layout-prose article {
-        padding: 24px 20px 48px;
-        max-width: none;
+        padding: 24px 0 48px;
     }
 
     /* Tables: horizontal scroll */
@@ -660,7 +668,7 @@ footer {
 
     /* Typography adjustments */
     h1 {
-        font-size: 22px;
+        font-size: 24px;
     }
 
     .layout-technical h2 {
@@ -674,8 +682,7 @@ footer {
     }
 
     .layout-prose footer {
-        max-width: none;
-        padding: 0 20px 48px;
+        padding: 0 0 48px;
     }
 }
 
