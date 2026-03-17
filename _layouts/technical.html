@@ -1,0 +1,24 @@
+---
+layout: default
+body_class: layout-technical
+---
+<div class="page-flex">
+    <aside class="sidebar-toc" id="sidebar-toc">
+        <div class="toc-title">Содержание</div>
+        <nav class="toc-nav" id="toc-nav"></nav>
+    </aside>
+    <div class="content-area">
+        <div class="mobile-toc" id="mobile-toc">
+            <button class="mobile-toc-toggle" id="mobile-toc-toggle" aria-expanded="false">
+                <span class="mobile-toc-arrow">▶</span> Содержание
+            </button>
+            <nav class="mobile-toc-nav" id="mobile-toc-nav"></nav>
+        </div>
+        <article>
+            <h1>{{ page.title }}</h1>
+            {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
+            {{ content }}
+        </article>
+    </div>
+</div>
+<script src="{{ site.baseurl }}/assets/js/toc.js"></script>
