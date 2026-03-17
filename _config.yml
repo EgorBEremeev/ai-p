@@ -1,7 +1,0 @@
-baseurl: "/ai-p"
-title: "AI-P"
-markdown: kramdown
-kramdown:
-  input: GFM
-plugins:
-  - jekyll-redirect-from
