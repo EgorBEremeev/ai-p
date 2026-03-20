@@ -51,6 +51,7 @@
 html {
     font-size: 100%;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -61,6 +62,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 body.layout-prose { font-size: 17px; }
@@ -503,6 +505,16 @@ td {
     td {
         border-color: var(--divider);
     }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+pre {
+    overflow-x: auto;
+    max-width: 100%;
 }
 
 /* ══════════════════════════════════════════════════
