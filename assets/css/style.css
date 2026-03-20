@@ -507,16 +507,6 @@ td {
     }
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-pre {
-    overflow-x: auto;
-    max-width: 100%;
-}
-
 /* ══════════════════════════════════════════════════
    SECTION 8: Typography: headings, badges
    ══════════════════════════════════════════════════ */
@@ -682,8 +672,18 @@ footer {
         padding: 24px 0 48px;
     }
 
-    /* Tables */
-    .content-area {
+    /* Wide content: individual scroll containers */
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    pre {
+        overflow-x: auto;
+    }
+
+    .content-area p:has(> img) {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
