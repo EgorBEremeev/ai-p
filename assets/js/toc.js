@@ -139,6 +139,18 @@
                 if (arrow) arrow.textContent = expanded ? '▶' : '▼';
             });
         }
+
+        // Wrap tables in scrollable containers (for mobile horizontal scroll)
+        var contentArea = document.querySelector('.content-area');
+        if (contentArea) {
+            var tables = Array.prototype.slice.call(contentArea.querySelectorAll('table'));
+            tables.forEach(function (table) {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'table-scroll';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            });
+        }
     }
 
     if (document.readyState === 'loading') {
