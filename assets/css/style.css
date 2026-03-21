@@ -714,8 +714,12 @@ footer {
         overflow-y: auto;
     }
 
-    .table-scroll.has-matrix {
-        overflow-x: auto;
+    /* Sticky thead for all tables on desktop (no wrapper = CSS sticky works) */
+    .content-area table thead th {
+        position: sticky;
+        top: 0;
+        background: var(--th-bg);
+        z-index: 2;
     }
 
     .content-area table.table-compact-first {

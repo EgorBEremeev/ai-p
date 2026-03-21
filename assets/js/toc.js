@@ -152,7 +152,7 @@
             });
         }
 
-        // Wrap tables in scrollable containers (for mobile horizontal scroll)
+        // Wrap tables in scrollable containers
         if (contentArea) {
             var tables = Array.prototype.slice.call(contentArea.querySelectorAll('table'));
             tables.forEach(function (table) {
@@ -162,42 +162,19 @@
                 }
                 var isMatrix = headerCells.length > 6;
 
-                if (!isDesktop || isMatrix) {
-                    var wrapper = document.createElement('div');
-                    wrapper.className = 'table-scroll';
-                    table.parentNode.insertBefore(wrapper, table);
-                    wrapper.appendChild(table);
-                    if (isMatrix) {
-                        table.classList.add('matrix-table');
-                        wrapper.classList.add('has-matrix');
-                    }
-                } else if (isMatrix) {
+                if (isMatrix) {
                     table.classList.add('matrix-table');
                 }
-            });
 
-            // Sticky thead for matrix tables via JS transform (desktop only)
-            if (isDesktop) {
-                contentArea.addEventListener('scroll', function () {
-                    var matrices = contentArea.querySelectorAll('.matrix-table');
-                    for (var i = 0; i < matrices.length; i++) {
-                        var table = matrices[i];
-                        var wrapper = table.closest('.table-scroll');
-                        if (!wrapper) continue;
-                        var wrapperRect = wrapper.getBoundingClientRect();
-                        var contentRect = contentArea.getBoundingClientRect();
-                        var offset = contentRect.top - wrapperRect.top;
-                        var thead = table.querySelector('thead');
-                        if (thead) {
-                            if (offset > 0 && offset < wrapper.offsetHeight - thead.offsetHeight) {
-                                thead.style.transform = 'translateY(' + offset + 'px)';
-                            } else {
-                                thead.style.transform = '';
-                            }
-                        }
-                    }
-                });
-            }
+                if (!isDesktop) {
+                    // Mobile: wrap all tables for horizontal scroll
+                    var wrapper = document.createElement('div');
+                    wrapper.className = 'table-scroll';
+                    if (isMatrix) wrapper.classList.add('has-matrix');
+                    table.parentNode.insertBefore(wrapper, table);
+                    wrapper.appendChild(table);
+                }
+            });
         }
     }
 
