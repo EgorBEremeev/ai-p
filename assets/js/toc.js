@@ -156,18 +156,23 @@
         if (contentArea) {
             var tables = Array.prototype.slice.call(contentArea.querySelectorAll('table'));
             tables.forEach(function (table) {
-                var wrapper = document.createElement('div');
-                wrapper.className = 'table-scroll';
-                table.parentNode.insertBefore(wrapper, table);
-                wrapper.appendChild(table);
-                // Mark wide tables (>6 columns) as matrix tables for sticky first column
                 var headerCells = table.querySelectorAll('thead th');
                 if (!headerCells.length) {
                     headerCells = table.querySelectorAll('tr:first-child th, tr:first-child td');
                 }
-                if (headerCells.length > 6) {
+                var isMatrix = headerCells.length > 6;
+
+                if (!isDesktop || isMatrix) {
+                    var wrapper = document.createElement('div');
+                    wrapper.className = 'table-scroll';
+                    table.parentNode.insertBefore(wrapper, table);
+                    wrapper.appendChild(table);
+                    if (isMatrix) {
+                        table.classList.add('matrix-table');
+                        wrapper.classList.add('has-matrix');
+                    }
+                } else if (isMatrix) {
                     table.classList.add('matrix-table');
-                    wrapper.classList.add('has-matrix');
                 }
             });
 
