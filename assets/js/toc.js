@@ -150,7 +150,10 @@
                 table.parentNode.insertBefore(wrapper, table);
                 wrapper.appendChild(table);
                 // Mark wide tables (>6 columns) as matrix tables for sticky first column
-                var headerCells = table.querySelectorAll('thead th, tr:first-child th, tr:first-child td');
+                var headerCells = table.querySelectorAll('thead th');
+                if (!headerCells.length) {
+                    headerCells = table.querySelectorAll('tr:first-child th, tr:first-child td');
+                }
                 if (headerCells.length > 6) {
                     table.classList.add('matrix-table');
                 }

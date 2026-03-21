@@ -314,6 +314,10 @@ em {
     max-width: none;
 }
 
+.content-area table.table-full {
+    width: 100%;
+}
+
 .layout-technical h1 {
     font-size: 26px;
 }
@@ -333,8 +337,6 @@ em {
     color: #718096;
     position: sticky;
     top: 53px;
-    max-height: calc(100vh - 53px);
-    overflow-y: auto;
     align-self: flex-start;
 }
 
@@ -521,10 +523,12 @@ td {
     left: 0;
     background: var(--bg);
     z-index: 1;
+    min-width: 120px;
 }
 
 .matrix-table thead th:first-child {
     z-index: 3;
+    background: var(--th-bg);
 }
 
 .content-area ul,
@@ -717,6 +721,21 @@ footer {
     td {
         word-break: break-word;
         overflow-wrap: break-word;
+    }
+
+    /* Per-table mobile width overrides */
+    .table-narrow-first table {
+        table-layout: fixed;
+        width: 100%;
+    }
+    .table-narrow-first td:first-child,
+    .table-narrow-first th:first-child {
+        width: 30%;
+    }
+
+    .table-even table {
+        table-layout: fixed;
+        width: 100%;
     }
 
     /* SVG diagram: scroll within paragraph container */
