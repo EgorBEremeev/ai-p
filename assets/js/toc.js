@@ -85,6 +85,10 @@
             });
         }
 
+        var contentArea = document.querySelector('.content-area');
+        var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+        var observerRoot = isDesktop ? contentArea : null;
+
         var observer = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -93,6 +97,7 @@
                 }
             });
         }, {
+            root: observerRoot,
             rootMargin: '-20% 0px -80% 0px',
             threshold: 0
         });
@@ -111,7 +116,14 @@
                 var targetId = a.getAttribute('href').slice(1);
                 var targetEl = document.getElementById(targetId);
                 if (targetEl) {
-                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                    if (isDesktop && contentArea) {
+                        var targetTop = targetEl.getBoundingClientRect().top
+                            - contentArea.getBoundingClientRect().top
+                            + contentArea.scrollTop;
+                        contentArea.scrollTo({ top: targetTop, behavior: 'smooth' });
+                    } else {
+                        targetEl.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
                 // Collapse mobile TOC
                 var mobileTocNavEl = document.getElementById('mobile-toc-nav');
@@ -141,7 +153,6 @@
         }
 
         // Wrap tables in scrollable containers (for mobile horizontal scroll)
-        var contentArea = document.querySelector('.content-area');
         if (contentArea) {
             var tables = Array.prototype.slice.call(contentArea.querySelectorAll('table'));
             tables.forEach(function (table) {
@@ -156,8 +167,32 @@
                 }
                 if (headerCells.length > 6) {
                     table.classList.add('matrix-table');
+                    wrapper.classList.add('has-matrix');
                 }
             });
+
+            // Sticky thead for matrix tables via JS transform (desktop only)
+            if (isDesktop) {
+                contentArea.addEventListener('scroll', function () {
+                    var matrices = contentArea.querySelectorAll('.matrix-table');
+                    for (var i = 0; i < matrices.length; i++) {
+                        var table = matrices[i];
+                        var wrapper = table.closest('.table-scroll');
+                        if (!wrapper) continue;
+                        var wrapperRect = wrapper.getBoundingClientRect();
+                        var contentRect = contentArea.getBoundingClientRect();
+                        var offset = contentRect.top - wrapperRect.top;
+                        var thead = table.querySelector('thead');
+                        if (thead) {
+                            if (offset > 0 && offset < wrapper.offsetHeight - thead.offsetHeight) {
+                                thead.style.transform = 'translateY(' + offset + 'px)';
+                            } else {
+                                thead.style.transform = '';
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 

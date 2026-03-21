@@ -185,6 +185,11 @@ body.layout-technical { font-size: 14px; }
     padding: 12px 28px;
     font-family: var(--font-sans);
     font-size: 14px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
 }
 
 .nav-dropdown a {
@@ -318,6 +323,16 @@ em {
     width: 100%;
 }
 
+.content-area table.table-compact-first {
+    table-layout: fixed;
+}
+
+.content-area table.table-compact-first td:first-child,
+.content-area table.table-compact-first th:first-child {
+    width: 28%;
+    word-break: break-word;
+}
+
 .layout-technical h1 {
     font-size: 26px;
 }
@@ -335,9 +350,6 @@ em {
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     font-size: 13px;
     color: #718096;
-    position: sticky;
-    top: 53px;
-    align-self: flex-start;
 }
 
 .toc-title {
@@ -508,6 +520,11 @@ td {
     td {
         border-color: var(--divider);
     }
+
+    .matrix-table td:first-child,
+    .matrix-table th:first-child {
+        box-shadow: 2px 0 0 0 var(--divider);
+    }
 }
 
 .table-scroll thead th {
@@ -524,6 +541,7 @@ td {
     background: var(--bg);
     z-index: 1;
     min-width: 120px;
+    box-shadow: 2px 0 0 0 #e2e0dc;
 }
 
 .matrix-table thead th:first-child {
@@ -639,6 +657,39 @@ footer {
 
 .layout-technical footer {
     width: 100%;
+}
+
+/* ══════════════════════════════════════════════════
+   SECTION 9.5: Desktop split-scroll (technical layout)
+   ══════════════════════════════════════════════════ */
+
+@media (min-width: 769px) {
+    body.layout-technical {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .layout-technical .page-flex {
+        overflow: hidden;
+    }
+
+    .layout-technical .sidebar-toc {
+        height: calc(100vh - 53px);
+        overflow-y: auto;
+    }
+
+    .layout-technical .content-area {
+        overflow-y: auto;
+    }
+
+    /* Sticky thead: on desktop, non-matrix table-scroll should not create scroll context */
+    .table-scroll {
+        overflow-x: visible;
+    }
+
+    .table-scroll.has-matrix {
+        overflow-x: auto;
+    }
 }
 
 /* ══════════════════════════════════════════════════

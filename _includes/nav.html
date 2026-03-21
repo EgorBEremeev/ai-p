@@ -12,13 +12,13 @@
         <span class="separator">|</span>
         <a href="{{ site.baseurl }}/en/"{% if page.lang == "en" %} class="active"{% endif %}>EN</a>
     </div>
+    <div class="nav-dropdown" id="nav-dropdown">
+        <a href="{{ site.baseurl }}/ru/"{% if page.nav_active == "manifesto" %} class="active"{% endif %}>Манифест</a>
+        <a href="{{ site.baseurl }}/ru/conceptual-model/"{% if page.nav_active == "model" %} class="active"{% endif %}>Модель AI-P</a>
+        <a href="{{ site.baseurl }}/ru/subjectivity-spectrum/"{% if page.nav_active == "spectrum" %} class="active"{% endif %}>Спектр субъектности</a>
+        <a href="{{ site.baseurl }}/ru/architectural-atlas/" class="disabled{% if page.nav_active == "atlas" %} active{% endif %}">Архитектурный атлас</a>
+    </div>
 </header>
-<div class="nav-dropdown" id="nav-dropdown">
-    <a href="{{ site.baseurl }}/ru/"{% if page.nav_active == "manifesto" %} class="active"{% endif %}>Манифест</a>
-    <a href="{{ site.baseurl }}/ru/conceptual-model/"{% if page.nav_active == "model" %} class="active"{% endif %}>Модель AI-P</a>
-    <a href="{{ site.baseurl }}/ru/subjectivity-spectrum/"{% if page.nav_active == "spectrum" %} class="active"{% endif %}>Спектр субъектности</a>
-    <a href="{{ site.baseurl }}/ru/architectural-atlas/" class="disabled{% if page.nav_active == "atlas" %} active{% endif %}">Архитектурный атлас</a>
-</div>
 <script>
 (function() {
     var btn = document.getElementById('nav-hamburger');

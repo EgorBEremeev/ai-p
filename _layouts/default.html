@@ -9,6 +9,6 @@
 <body class="{{ layout.body_class }}">
     {% include nav.html %}
     {{ content }}
-    {% include footer.html %}
+    {% unless layout.body_class == "layout-technical" %}{% include footer.html %}{% endunless %}
 </body>
 </html>
