@@ -189,11 +189,15 @@
                     cell.style.position = '';
                     cell.style.transform = '';
                     cell.style.zIndex = '';
+                    cell.style.boxShadow = '';
+                    cell.style.willChange = '';
                 });
             }
 
             function syncStickyHeaders() {
                 var nav = document.querySelector('.site-nav');
+                var pixelRatio = window.devicePixelRatio || 1;
+                var stickyTolerance = 2 / pixelRatio;
                 var anchorTop = isDesktop && contentArea
                     ? contentArea.getBoundingClientRect().top
                     : (nav ? nav.getBoundingClientRect().bottom : 0);
@@ -207,22 +211,36 @@
                         return;
                     }
 
+                    clearStickyHeader(headerRow);
+
                     var tableRect = table.getBoundingClientRect();
                     var shouldStick = tableRect.height > availableHeight;
                     if (!shouldStick) {
-                        clearStickyHeader(headerRow);
                         return;
                     }
 
                     var isMatrix = table.classList.contains('matrix-table');
+                    var headerCell = headerRow.cells[0];
+                    var headerTop = headerCell.getBoundingClientRect().top;
                     var headerHeight = headerRow.getBoundingClientRect().height;
-                    var isActive = tableRect.top < anchorTop && tableRect.bottom > anchorTop + headerHeight;
-                    var offset = isActive ? Math.max(0, anchorTop - tableRect.top) : 0;
+                    var isActive = headerTop <= anchorTop + stickyTolerance
+                        && tableRect.bottom >= anchorTop + headerHeight - stickyTolerance;
+                    var offset = 0;
+                    if (isActive) {
+                        offset = Math.max(0, anchorTop - headerTop);
+                        offset = Math.ceil(offset * pixelRatio) / pixelRatio;
+                    }
 
                     Array.prototype.forEach.call(headerRow.cells, function (cell, index) {
+                        if (!isActive) {
+                            return;
+                        }
+
                         cell.style.position = isMatrix && index === 0 ? 'sticky' : 'relative';
-                        cell.style.transform = offset ? 'translateY(' + offset + 'px)' : '';
+                        cell.style.transform = offset ? 'translate3d(0, ' + offset + 'px, 0)' : '';
                         cell.style.zIndex = isMatrix && index === 0 ? '5' : '4';
+                        cell.style.boxShadow = '0 -2px 0 0 var(--th-bg)';
+                        cell.style.willChange = 'transform';
                     });
                 });
             }
