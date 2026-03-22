@@ -540,13 +540,6 @@ td {
     }
 }
 
-.table-scroll thead th {
-    position: sticky;
-    top: 0;
-    background: var(--th-bg);
-    z-index: 2;
-}
-
 .matrix-table td:first-child,
 .matrix-table th:first-child {
     position: sticky;
@@ -712,14 +705,6 @@ footer {
 
     .layout-technical .content-area {
         overflow-y: auto;
-    }
-
-    /* Sticky thead for all tables on desktop (no wrapper = CSS sticky works) */
-    .content-area table thead th {
-        position: sticky;
-        top: 0;
-        background: var(--th-bg);
-        z-index: 2;
     }
 
     .content-area table.table-compact-first {
