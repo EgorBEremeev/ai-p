@@ -1,0 +1,108 @@
+# Параметрическая модель Искусственного Субъекта (Иерархическая структура)
+# Version 1.4.1 | Date: 11.02.2026
+# Исправленная и расширенная на основе mdl_AI-P.md. Из ОДЗ параметров удалены значения уровня Solution Architecture и оставлены только релевантные уровню CIM.
+
+L1_Слой_Когнитивного_Субстрата:
+  status: [Present, Absent]
+  elements:
+    Мозг_Brain: [Present, Absent]
+    Инструменты_Tools: [Present, Absent] # Solution Architecture Examples: MCP-compatible, Hard-coded
+
+L2_Слой_Поведения:
+  status: [Present, Absent]
+  processes:
+    Когнитивное_Управление_CC:
+      status: [Present, Absent]
+      control_type: [Present] # Solution Architecture Examples: Детерминированный, Event-driven, Стохастический выбор, Адаптивный
+      SynchronizationMode: [Present] # Solution Architecture Examples: Barriers, Asynchronous
+      clock:
+        CognitiveClock: [Present, Absent]
+          ClockState: [Present]
+    AfferentialSynthesis:
+      status: [Present, Absent]
+      # Жестко связаны с AfferentatioPolicy и операционально удобнее моделировать именно в той секции
+      # Factors:
+      #   Motivation_Intent: [Present, Absent]
+      #   Trigger_CC: [Present, Absent]
+      #   Situational_ClockState: [Present, Absent]
+      #   Memory_PMA: [Present, Absent]
+  forms:
+    Коннектом_Connectome:
+      status: [Present, Absent]
+      type: [None, Explicit, Implicit, Both]
+    Функциональная_Ячейка_FC:
+      status: [Present, Absent]
+      structure:
+        Intent: [Present, Absent]
+        Policies:
+          AfferentialPolicy:
+            status: [Present, Absent]
+            Factors:
+              Motivation_Intent: [Present] # Моделирует мотивацию (всегда присутствует при активации)
+              Trigger_CC: [Present] # Моделирует пусковую афферентацию (всегда присутствует при активации)
+              ClockState: [None, Direct, Policy, Both]  # Situational (обстановочная); Direct=такт, Policy=история, Both=оба 
+              Memory: [Present, Absent] # Глубина вовлечения субъективного опыта (PMA)
+          EfferentialPolicy:
+            status: [Present, Absent]
+            SubjectiveContext: [None, ClockState, Frame, Both]
+            TargetSubstrate: [Brain, Tools]
+          SubjectivityPolicy:
+            status: [Present, Absent]
+            Attribution: [ClockState, Frame]
+            Experience: [Brain_Output, Tools_Output]
+        ResultAcceptor: [None, Built-in]
+
+L3_Слой_Субъектности:
+  status: [Present, Absent]
+  processes:
+    ProjectiveMnemonicAfferentation:
+      status: [Present, Absent]
+      SelectionDepth: [None, Episodic, Applied, Procedural, Values] # Соответствует слоям памяти
+    EgoAfferentation: [Present, Absent]
+    Consolidation:
+      status: [Present, Absent]
+      EpisodicTimeConsolidation: [Present, Absent] # Solution Architecture Examples: N-Slide_Window
+      AppliedConsolidation: [Present, Absent]
+      ProceduralConsolidation: [Present, Absent]
+      ConsolidationPolicy: [Present, Absent]
+  forms:
+    Frame: [Present, Absent]
+    SubjectiveExperience:
+      status: [Present, Absent]
+      MemoryLayers:
+        episodic:
+          status: [Present, Absent]
+          Depth: [Recency-only, Unlimited] # Глубина (краткосрочная/полная)
+        applied:
+          status: [Present, Absent] # Прикладной (предметная область)
+        procedural:
+          status: [Present, Absent] # Процедурный слой (навыки)
+        values:
+          status: [Present, Absent] # Ценностный слой (экстрагированные ценности)
+
+L4_Слой_Эволюции:
+  status: [Present, Absent]
+  forms:
+    FunctionalSystem:
+      status: [Present, Absent]
+      Concurrency: [1:1, 1:m]
+      ResultAcceptor:
+        status: [Present, Absent]
+        ResultModel: [None, Internal, External]
+        ComparisonMechanism: [None, Internal, External]
+  processes:
+    FeedbackAfferentation:
+      status: [Absent, Manual, Self]
+      CorrectionObjects:
+        FC_Components: [not affected, affected]
+        Connectome_Explicit: [not affected, affected]
+        Connectome_Implicit: [not affected, affected]
+        SubjExp_ConsolidationPolicy: [not affected, affected]
+        CC_Strategies: [not affected, affected]
+        FS_Acceptors: [not affected, affected]
+      ConflictResolutionPolicy: [None, Present]
+
+LM_Слой_Морфологии:
+  status: [Present, Absent]
+  SubjectMorphology:
+    nature: [Carrier] # Always presented
